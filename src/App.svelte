@@ -1,5 +1,6 @@
 <script lang="ts">
-  import Header from "./lib/Header.svelte";
+  import Header from "./lib/UI/Header.svelte";
+  import MeetUpItem from "./lib/MeetUpItem/MeetUpItem.svelte";
 
   const meetups: Array<Object>=[
     {
@@ -25,6 +26,16 @@
 
 <style>
 
+  #meetups{
+    margin-top: 5rem;
+  }
+
 </style>
 
 <Header />
+
+<section id="meetups">
+  {#each meetups as meetup}
+    <MeetUpItem title={meetup.title} subtitle={meetup.subtitle}/>
+  {/each}
+</section>
