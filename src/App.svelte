@@ -72,7 +72,7 @@
       value={title}
       on:input={(event) => title = event.target.value}
       controlType={''}
-      rows={''}
+      rows={0}
       text={'text'}
     />
     <TextInput
