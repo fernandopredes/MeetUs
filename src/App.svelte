@@ -1,14 +1,24 @@
 <script lang="ts">
   import Header from "./lib/UI/Header.svelte";
-  import MeetUpItem from "./lib/MeetUpItem/MeetUpItem.svelte";
+import MeetupGrid from "./lib/MeetUpItem/MeetupGrid.svelte";
 
-  const meetups: Array<Object>=[
+  type MeetUp = {
+    id: string
+    title: string
+    subtitle: string
+    description: string
+    imageUrl: string
+    address:string
+    conctactEmail:string
+  }
+
+  const meetups: Array<MeetUp>=[
     {
       id:'m1',
       title:'Coding Camp',
       subtitle: 'Learn to Code',
       description: 'In this meetup, we will have new experts',
-      imageUrl:'https://poketouch.files.wordpress.com/2022/11/hammer_pokemon_tinkaton.png',
+      imageUrl:'https://i.picsum.photos/id/832/1000/300.jpg?hmac=7Um8aw9pY7XACDo2HolPxUMO62augEtR_hfv7a6-HLI',
       address:'3744 E Chapman Ave',
       conctactEmail:'test@test.com'
     },
@@ -17,7 +27,7 @@
       title:'Coding Camp',
       subtitle: 'Learn to Code part 2',
       description: 'In this meetup, we will MORE new experts',
-      imageUrl:'https://poketouch.files.wordpress.com/2017/11/okemon_laptop_wrist_rest_mew_plushie_and_cushion.jpg',
+      imageUrl:'https://i.picsum.photos/id/995/1000/300.jpg?hmac=cQdvzwMfKPGJzGRVju60qEce8RLQU5HYU6PeIKk2hkc',
       address:'3744 E Chapman Ave',
       conctactEmail:'test@test.com'
     }
@@ -26,7 +36,7 @@
 
 <style>
 
-  #meetups{
+main{
     margin-top: 5rem;
   }
 
@@ -34,8 +44,6 @@
 
 <Header />
 
-<section id="meetups">
-  {#each meetups as meetup}
-    <MeetUpItem title={meetup.title} subtitle={meetup.subtitle}/>
-  {/each}
-</section>
+<main>
+  <MeetupGrid {meetups} />>
+</main>

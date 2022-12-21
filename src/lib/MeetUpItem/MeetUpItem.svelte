@@ -4,6 +4,7 @@
   export let imageUrl: string
   export let description: string
   export let address: string
+  export let email: string
 </script>
 
 <style>
@@ -64,6 +65,7 @@
     <header>
       <h1>{title}</h1>
       <h2>{subtitle}</h2>
+      <p>{address}</p>
     </header>
     <div class="image">
         <img src={imageUrl} alt={imageUrl}>
@@ -72,6 +74,7 @@
       <p>{description}</p>
     </div>
     <footer>
+      <a href="mailto:{email}">Contact</a>
       <button>Show Details</button>
       <button>Favorite</button>
     </footer>
