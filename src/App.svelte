@@ -13,6 +13,12 @@
     conctactEmail: string;
   };
 
+  let func = (event: Event) => {
+    const element = event.currentTarget as HTMLInputElement
+     const value = element.value
+     return value
+  }
+
   let title: string = "";
   let subtitle: string = "";
   let description: string = "";
@@ -70,7 +76,7 @@
       id="title"
       label="Title"
       value={title}
-      on:input={(event) => title = event.target.value}
+      on:input={(event) => title = func(event)}
       controlType={''}
       rows={0}
       text={'text'}
@@ -79,7 +85,7 @@
       id="subtitle"
       label="Subitle"
       value={subtitle}
-      on:input={(event) => subtitle = event.target.value}
+      on:input={(event) => subtitle = func(event)}
       controlType={''}
       rows={0}
       text={'text'}
@@ -88,7 +94,7 @@
       id="address"
       label="Address"
       value={address}
-      on:input={(event) => address = event.target.value}
+      on:input={(event) => address = func(event)}
       controlType={''}
       rows={0}
       text={'text'}
@@ -97,7 +103,7 @@
       id="imageUrl"
       label="Image"
       value={imageUrl}
-      on:input={(event) => imageUrl = event.target.value}
+      on:input={(event) => imageUrl = func(event)}
       controlType={''}
       rows={0}
       text={'text'}
@@ -106,7 +112,7 @@
       id="email"
       label="E-mail"
       value={conctactEmail}
-      on:input={(event) => conctactEmail = event.target.value}
+      on:input={(event) => conctactEmail = func(event)}
       controlType={''}
       rows={0}
       text={'email'}
@@ -115,7 +121,7 @@
       id="description"
       label="Description"
       value={description}
-      on:input={(event) => description = event.target.value}
+      on:input={(event) => description = func(event)}
       controlType={'textarea'}
       rows={3}
       text={'text'}
