@@ -2,6 +2,7 @@
   import Header from "./lib/UI/Header.svelte";
   import MeetupGrid from "./lib/MeetUpItem/MeetupGrid.svelte";
   import TextInput from "./lib/UI/TextInput.svelte";
+  import Button from "./lib/UI/Button.svelte";
 
   type MeetUp = {
     id: string;
@@ -13,7 +14,7 @@
     conctactEmail: string;
   };
 
-  let func = (event: Event) => {
+  const func = (event: Event) => {
     const element = event.currentTarget as HTMLInputElement
      const value = element.value
      return value
@@ -126,7 +127,7 @@
       rows={3}
       text={'text'}
     />
-    <button type="submit">Save</button>
+    <Button type="submit" caption="Save" href={null}/>
   </form>
   <MeetupGrid {meetups} />>
 </main>
@@ -135,4 +136,10 @@
   main {
     margin-top: 5rem;
   }
+
+  form{
+    width: 30rem;
+    max-width: 90%;
+    margin: auto;
+ }
 </style>
