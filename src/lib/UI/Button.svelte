@@ -1,8 +1,8 @@
 <script lang="ts">
   export let type:string
   export let caption:string
-  export let href:string
-  export let mode:string
+  export let href:string =undefined
+  export let mode:string = undefined
 </script>
 
 <style>

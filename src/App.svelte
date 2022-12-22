@@ -127,7 +127,7 @@
       rows={3}
       text={'text'}
     />
-    <Button type="submit" caption="Save" href={null}/>
+    <Button type="submit" caption="Save" />
   </form>
   <MeetupGrid {meetups} />>
 </main>

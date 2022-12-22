@@ -76,7 +76,7 @@
     </div>
     <footer>
       <Button href="mailto:{email}" type="" caption="Contact"/>
-      <Button mode="outline" type="button" caption="Show Details" href={null}/>
-      <Button type="button" caption="Favorite" href={null}/>
+      <Button mode="outline" type="button" caption="Show Details" />
+      <Button type="button" caption="Favorite"/>
     </footer>
 </article>
