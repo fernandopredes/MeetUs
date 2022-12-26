@@ -12,6 +12,7 @@
     imageUrl: string;
     address: string;
     conctactEmail: string;
+    isFavorite: boolean
   };
 
   const func = (event: Event) => {
@@ -27,6 +28,7 @@
   let address: string = "";
   let conctactEmail: string = "";
 
+
   let meetups: Array<MeetUp> = [
     {
       id: "m1",
@@ -37,6 +39,7 @@
         "https://i.picsum.photos/id/832/1000/300.jpg?hmac=7Um8aw9pY7XACDo2HolPxUMO62augEtR_hfv7a6-HLI",
       address: "3744 E Chapman Ave",
       conctactEmail: "test@test.com",
+      isFavorite: false
     },
     {
       id: "m2",
@@ -47,6 +50,7 @@
         "https://i.picsum.photos/id/995/1000/300.jpg?hmac=cQdvzwMfKPGJzGRVju60qEce8RLQU5HYU6PeIKk2hkc",
       address: "3744 E Chapman Ave",
       conctactEmail: "test@test.com",
+      isFavorite: false
     },
   ];
 
@@ -59,6 +63,7 @@
       imageUrl: imageUrl,
       address: address,
       conctactEmail: conctactEmail,
+      isFavorite: false
     };
 
     meetups = [newMeetUp, ...meetups];
@@ -66,6 +71,16 @@
 
   }
 
+  function toggleFavorite(event: CustomEvent) {
+    const id = event.detail
+    const updatedMeetup = {...meetups.find(m => m.id === id)}
+    updatedMeetup.isFavorite = !updatedMeetup.isFavorite
+    const meetupIndex = meetups.findIndex(m => m.id === id)
+    const updatedMeetups = [...meetups]
+    updatedMeetups[meetupIndex] = updatedMeetup
+    meetups = updatedMeetups
+    
+  }
 
 </script>
 
@@ -129,7 +144,7 @@
     />
     <Button type="submit" caption="Save" />
   </form>
-  <MeetupGrid {meetups} />>
+  <MeetupGrid {meetups} on:togglefavorite="{toggleFavorite}" />>
 </main>
 
 <style>

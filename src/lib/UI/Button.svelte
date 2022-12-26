@@ -1,7 +1,7 @@
 <script lang="ts">
-  export let type:string
+  export let type:any
   export let caption:string
-  export let href:string =undefined
+  export let href:string = undefined
   export let mode:string = undefined
 </script>
 
@@ -87,5 +87,5 @@ button:disabled:active {
 {#if href}
   <a {href}>{caption}</a>
 {:else}
-  <button class="{mode}" type="{type}">{caption}</button>
+  <button class="{mode}" type="{type}" on:click>{caption}</button>
 {/if}

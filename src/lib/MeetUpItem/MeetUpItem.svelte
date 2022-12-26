@@ -1,12 +1,41 @@
 <script lang="ts">
   import Button from "../UI/Button.svelte";
-  export let title: string
-  export let subtitle: string
-  export let imageUrl: string
-  export let description: string
-  export let address: string
-  export let email: string
+  import { createEventDispatcher } from "svelte";
+  export let id: string;
+  export let title: string;
+  export let subtitle: string;
+  export let imageUrl: string;
+  export let description: string;
+  export let address: string;
+  export let email: string;
+  export let isFav: boolean
+
+  const dispatch = createEventDispatcher();
 </script>
+
+<article>
+  <header>
+    <h1>{title}</h1>
+    <h2>{subtitle}</h2>
+    <p>{address}</p>
+  </header>
+  <div class="image">
+    <img src={imageUrl} alt={imageUrl} />
+  </div>
+  <div class="content">
+    <p>{description}</p>
+  </div>
+  <footer>
+    <Button href="mailto:{email}" type="" caption="Contact" />
+    <Button
+      mode="outline"
+      type="button"
+      caption="{isFav ? 'Unfavorite' : 'Favorite'}"
+      on:click={() => dispatch("togglefavorite", id)}
+    />
+    <Button type="button" caption="Show Details" />
+  </footer>
+</article>
 
 <style>
   article {
@@ -61,22 +90,3 @@
     text-align: right;
   }
 </style>
-
-<article>
-    <header>
-      <h1>{title}</h1>
-      <h2>{subtitle}</h2>
-      <p>{address}</p>
-    </header>
-    <div class="image">
-        <img src={imageUrl} alt={imageUrl}>
-    </div>
-    <div class="content">
-      <p>{description}</p>
-    </div>
-    <footer>
-      <Button href="mailto:{email}" type="" caption="Contact"/>
-      <Button mode="outline" type="button" caption="Show Details" />
-      <Button type="button" caption="Favorite"/>
-    </footer>
-</article>
