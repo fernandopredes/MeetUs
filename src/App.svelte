@@ -3,6 +3,7 @@
   import MeetupGrid from "./lib/MeetUpItem/MeetupGrid.svelte";
   import TextInput from "./lib/UI/TextInput.svelte";
   import Button from "./lib/UI/Button.svelte";
+  import EditMeetup from "./lib/MeetUpItem/EditMeetup.svelte";
 
   type MeetUp = {
     id: string;
@@ -15,19 +16,7 @@
     isFavorite: boolean
   };
 
-  const func = (event: Event) => {
-    const element = event.currentTarget as HTMLInputElement
-     const value = element.value
-     return value
-  }
-
-  let title: string = "";
-  let subtitle: string = "";
-  let description: string = "";
-  let imageUrl: string = "";
-  let address: string = "";
-  let conctactEmail: string = "";
-
+  let editMode = null
 
   let meetups: Array<MeetUp> = [
     {
@@ -54,21 +43,22 @@
     },
   ];
 
-  function addMeetUp() {
+  function addMeetUp(event: CustomEvent) {
+
+
     const newMeetUp: MeetUp = {
       id: Math.random().toString(),
-      title: title,
-      subtitle: subtitle,
-      description: description,
-      imageUrl: imageUrl,
-      address: address,
-      conctactEmail: conctactEmail,
+      title: event.detail.title,
+      subtitle: event.detail.subtitle,
+      description: event.detail.description,
+      imageUrl: event.detail.imageUrl,
+      address: event.detail.address,
+      conctactEmail: event.detail.conctactEmail,
       isFavorite: false
     };
 
     meetups = [newMeetUp, ...meetups];
-
-
+    editMode = null
   }
 
   function toggleFavorite(event: CustomEvent) {
@@ -79,7 +69,7 @@
     const updatedMeetups = [...meetups]
     updatedMeetups[meetupIndex] = updatedMeetup
     meetups = updatedMeetups
-    
+
   }
 
 </script>
@@ -87,63 +77,12 @@
 <Header />
 
 <main>
-  <form on:submit|preventDefault={addMeetUp}>
-    <TextInput
-      id="title"
-      label="Title"
-      value={title}
-      on:input={(event) => title = func(event)}
-      controlType={''}
-      rows={0}
-      text={'text'}
-    />
-    <TextInput
-      id="subtitle"
-      label="Subitle"
-      value={subtitle}
-      on:input={(event) => subtitle = func(event)}
-      controlType={''}
-      rows={0}
-      text={'text'}
-    />
-    <TextInput
-      id="address"
-      label="Address"
-      value={address}
-      on:input={(event) => address = func(event)}
-      controlType={''}
-      rows={0}
-      text={'text'}
-    />
-    <TextInput
-      id="imageUrl"
-      label="Image"
-      value={imageUrl}
-      on:input={(event) => imageUrl = func(event)}
-      controlType={''}
-      rows={0}
-      text={'text'}
-    />
-    <TextInput
-      id="email"
-      label="E-mail"
-      value={conctactEmail}
-      on:input={(event) => conctactEmail = func(event)}
-      controlType={''}
-      rows={0}
-      text={'email'}
-    />
-    <TextInput
-      id="description"
-      label="Description"
-      value={description}
-      on:input={(event) => description = func(event)}
-      controlType={'textarea'}
-      rows={3}
-      text={'text'}
-    />
-    <Button type="submit" caption="Save" />
-  </form>
+  <div class="meetup-controls">
+    <Button caption='New Meetup' on:click="{() => editMode ='add'}"/>
+  </div>
+    {#if editMode === 'add'}
+    <EditMeetup on:save="{addMeetUp}" />
+    {/if}
   <MeetupGrid {meetups} on:togglefavorite="{toggleFavorite}" />>
 </main>
 
@@ -151,10 +90,8 @@
   main {
     margin-top: 5rem;
   }
+  .meetup-controls{
+    margin: 1rem;
+  }
 
-  form{
-    width: 30rem;
-    max-width: 90%;
-    margin: auto;
- }
 </style>

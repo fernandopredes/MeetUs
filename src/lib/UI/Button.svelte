@@ -1,6 +1,6 @@
 <script lang="ts">
-  export let type:any
-  export let caption:string
+  export let type:any = undefined
+  export let caption:string = undefined
   export let href:string = undefined
   export let mode:string = undefined
   export let color:string = null
