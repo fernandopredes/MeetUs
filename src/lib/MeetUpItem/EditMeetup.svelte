@@ -92,5 +92,5 @@
     rows={3}
     text={'text'}
   />
-  <Button type="submit" caption="Save" />
+  <Button type="submit">Save</Button>
 </form>
