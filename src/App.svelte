@@ -7,14 +7,14 @@
   import EditMeetup from "./lib/MeetUpItem/EditMeetup.svelte";
 
   type MeetUp = {
-    id: string;
+    id?: string;
     title: string;
     subtitle: string;
     description: string;
     imageUrl: string;
     address: string;
     conctactEmail: string;
-    isFavorite: boolean
+    isFavorite?: boolean
   };
 
   let editMode = null
@@ -22,31 +22,24 @@
 
 
   function addMeetUp(event: CustomEvent) {
-
-
     const newMeetUp: MeetUp = {
-      id: Math.random().toString(),
+
       title: event.detail.title,
       subtitle: event.detail.subtitle,
       description: event.detail.description,
       imageUrl: event.detail.imageUrl,
       address: event.detail.address,
       conctactEmail: event.detail.conctactEmail,
-      isFavorite: false
+
     };
 
-    meetups = [newMeetUp, ...meetups];
+    meetups.addMeetup(newMeetUp)
     editMode = null
   }
 
   function toggleFavorite(event: CustomEvent) {
     const id = event.detail
-    const updatedMeetup = {...meetups.find(m => m.id === id)}
-    updatedMeetup.isFavorite = !updatedMeetup.isFavorite
-    const meetupIndex = meetups.findIndex(m => m.id === id)
-    const updatedMeetups = [...meetups]
-    updatedMeetups[meetupIndex] = updatedMeetup
-    meetups = updatedMeetups
+    meetups.toggleFavorite(id)
 
   }
 

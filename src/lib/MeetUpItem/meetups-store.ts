@@ -1,15 +1,16 @@
 import { writable } from "svelte/store";
 
-// type MeetUp = {
-//   id: string;
-//   title: string;
-//   subtitle: string;
-//   description: string;
-//   imageUrl: string;
-//   address: string;
-//   conctactEmail: string;
-//   isFavorite: boolean
-// };
+type MeetUp = {
+  id?: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  imageUrl: string;
+  address: string;
+  conctactEmail: string;
+  isFavorite?: boolean
+
+};
 
 const meetups = writable([
   {
@@ -36,4 +37,27 @@ const meetups = writable([
   },
 ])
 
-export default meetups
+const customMeetUpStore = {
+  subscribe: meetups.subscribe,
+  addMeetup: (meetupData:MeetUp)=>{
+    const newMeetup = {
+      ...meetupData,
+      id: Math.random().toString(),
+      isFavorite: false
+    }
+    meetups.update(items =>{
+      return [newMeetup, ...items]
+    })
+  },
+  toggleFavorite: (id:string)=>{
+    meetups.update(items => {
+      const updatedMeetup = {...items.find(m => m.id === id)}
+      updatedMeetup.isFavorite = !updatedMeetup.isFavorite
+      const meetupIndex = items.findIndex(m => m.id === id)
+      const updatedMeetups = [...items]
+      updatedMeetups[meetupIndex] = updatedMeetup
+      return updatedMeetups
+    })
+  }
+}
+export default customMeetUpStore;
