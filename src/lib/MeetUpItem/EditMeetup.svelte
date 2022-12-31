@@ -13,6 +13,7 @@
   let address: string = "";
   let conctactEmail: string = "";
 
+  //dont need these booleans to work
   let titleValid: boolean = false;
   let subtitleValid: boolean = false;
   let descriptionValid: boolean = false;
@@ -27,6 +28,7 @@
   $: descriptionValid = !isEmpty(description);
   $: imageUrlValid = !isEmpty(imageUrl);
   $: conctactEmailValid = isValidEmail(conctactEmail);
+
   $: formIsValid =
     titleValid &&
     subtitleValid &&
