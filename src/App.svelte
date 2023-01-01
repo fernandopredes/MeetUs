@@ -5,25 +5,37 @@
   import TextInput from "./lib/UI/TextInput.svelte";
   import Button from "./lib/UI/Button.svelte";
   import EditMeetup from "./lib/MeetUpItem/EditMeetup.svelte";
+  import MeetUpDetail from "./lib/MeetUpItem/MeetUpDetail.svelte";
 
   type MeetUp = {
     id?: string;
-    title: string;
-    subtitle: string;
-    description: string;
-    imageUrl: string;
-    address: string;
-    conctactEmail: string;
+    title?: string;
+    subtitle?: string;
+    description?: string;
+    imageUrl?: string;
+    address?: string;
+    conctactEmail?: string;
     isFavorite?: boolean
   };
 
-  let editMode = null
+  let editMode:string = null
 
-
+  let page:string = 'overview'
+  let pageData:MeetUp = {}
 
   function addMeetUp() {
 
     editMode = null
+  }
+
+  function showDetails(event: CustomEvent) {
+    page = 'details'
+    pageData.id = event.detail
+  }
+
+  function closeDetails() {
+    page = 'overview'
+    pageData = {}
   }
 
   // function toggleFavorite(event: CustomEvent) {
@@ -41,13 +53,17 @@
 <Header />
 
 <main>
+  {#if page === 'overview'}
   <div class="meetup-controls">
     <Button on:click="{() => editMode ='add'}">New Meetup</Button>
   </div>
     {#if editMode === 'add'}
     <EditMeetup on:save="{addMeetUp}" on:cancel="{cancelEdit}" />
     {/if}
-  <MeetupGrid meetups={$meetups}  />>
+  <MeetupGrid meetups={$meetups} on:showdetails={showDetails} />>
+  {:else}
+  <MeetUpDetail id={pageData.id} on:close={closeDetails} />
+  {/if}
 </main>
 
 <style>
