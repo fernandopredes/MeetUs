@@ -1,10 +1,22 @@
 <script lang="ts">
+  import meetups from "./meetups-store";
   import TextInput from "../UI/TextInput.svelte";
   import Button from "../UI/Button.svelte";
   import { createEventDispatcher } from "svelte";
   import Modal from "../UI/Modal.svelte";
   import { isEmpty } from "../../helpers/validation";
   import { isValidEmail } from "../../helpers/validation";
+
+  type MeetUp = {
+    id?: string;
+    title: string;
+    subtitle: string;
+    description: string;
+    imageUrl: string;
+    address: string;
+    conctactEmail: string;
+    isFavorite?: boolean
+  };
 
   let title: string = "";
   let subtitle: string = "";
@@ -45,14 +57,17 @@
   const dispatch = createEventDispatcher();
 
   function submitForm() {
-    dispatch("save", {
-      title: title,
-      subtitle: subtitle,
-      description: description,
-      imageUrl: imageUrl,
-      address: address,
-      conctactEmail: conctactEmail,
-    });
+    const newMeetUp: MeetUp = {
+    title: title,
+    subtitle: subtitle,
+    description: description,
+    imageUrl: imageUrl,
+    address: address,
+    conctactEmail: conctactEmail,
+    };
+
+    meetups.addMeetup(newMeetUp)
+    dispatch("save");
   }
 
   function cancel() {

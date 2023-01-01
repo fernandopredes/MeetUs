@@ -21,27 +21,16 @@
 
 
 
-  function addMeetUp(event: CustomEvent) {
-    const newMeetUp: MeetUp = {
+  function addMeetUp() {
 
-      title: event.detail.title,
-      subtitle: event.detail.subtitle,
-      description: event.detail.description,
-      imageUrl: event.detail.imageUrl,
-      address: event.detail.address,
-      conctactEmail: event.detail.conctactEmail,
-
-    };
-
-    meetups.addMeetup(newMeetUp)
     editMode = null
   }
 
-  function toggleFavorite(event: CustomEvent) {
-    const id = event.detail
-    meetups.toggleFavorite(id)
+  // function toggleFavorite(event: CustomEvent) {
+  //   const id = event.detail
+  //   meetups.toggleFavorite(id)
 
-  }
+  // }
 
   function cancelEdit() {
     editMode = null
@@ -58,7 +47,7 @@
     {#if editMode === 'add'}
     <EditMeetup on:save="{addMeetUp}" on:cancel="{cancelEdit}" />
     {/if}
-  <MeetupGrid meetups={$meetups} on:togglefavorite="{toggleFavorite}" />>
+  <MeetupGrid meetups={$meetups}  />>
 </main>
 
 <style>
