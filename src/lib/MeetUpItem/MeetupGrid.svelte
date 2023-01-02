@@ -1,10 +1,23 @@
-<script>
+<script lang="ts">
   import MeetUpItem from "./MeetUpItem.svelte";
+  import MeetupFilter from "./MeetupFilter.svelte";
   export let meetups;
-</script>
 
+
+  let favsOnly:boolean = false
+
+  $: filteredMeetups = favsOnly ? meetups.filter(m => m.isFavorite) : meetups
+
+  function setFilter(event: CustomEvent) {
+    favsOnly = event.detail === 1
+
+  }
+</script>
+<section id="meetup-controls">
+  <MeetupFilter on:select={setFilter}/>
+</section>
 <section id="meetups">
-  {#each meetups as meetup}
+  {#each filteredMeetups as meetup}
     <MeetUpItem
       id={meetup.id}
       title={meetup.title}
@@ -21,15 +34,18 @@
 </section>
 
 <style>
-  section {
+  #meetups {
     width: 100%;
     display: grid;
     grid-template-columns: 1fr;
     grid-gap: 1rem;
   }
+  #meetup-controls{
+    margin: 1rem;
+  }
 
   @media (min-width: 768px) {
-    section {
+    #meetups {
       grid-template-columns: repeat(2, 1fr);
     }
   }
