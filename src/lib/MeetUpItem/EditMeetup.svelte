@@ -129,7 +129,16 @@
   }
 
   function deleteMeetup() {
-    meetups.removeMeetup(id)
+    fetch(`https://meetups-f271a-default-rtdb.firebaseio.com/meetups/${id}.json`, {
+        method: "DELETE"
+      })
+      .then(res =>{
+        if (!res.ok) {
+            throw new Error("An error occurred, please try again!");
+          }
+          meetups.removeMeetup(id)
+        })
+      .catch(err =>{console.log(err)})
     dispatch("save");
   }
 </script>
