@@ -74,7 +74,7 @@
   const dispatch = createEventDispatcher();
 
   function submitForm() {
-    const newMeetUp: MeetUp = {
+    const meetupData: MeetUp = {
     title: title,
     subtitle: subtitle,
     description: description,
@@ -83,25 +83,43 @@
     conctactEmail: conctactEmail,
     };
 
-    if(id){
-      meetups.updateMeetup(id, newMeetUp)
-    }else{
-      fetch('https://meetups-f271a-default-rtdb.firebaseio.com/meetups.json',{
-        method:'POST',
-        body: JSON.stringify({...newMeetUp, isFavorite: false}),
-        headers:{'Content-Type':'application/json'}
+    if (id) {
+      fetch(`https://meetups-f271a-default-rtdb.firebaseio.com/meetups/${id}.json`, {
+        method: "PATCH",
+        body: JSON.stringify(meetupData),
+        headers: { "Content-Type": "application/json" }
       })
-      .then(res => {
-        if(!res.ok){
-          throw new Error('An error has occurred, please try again!')
-        }
-        return res.json()
+        .then(res => {
+          if (!res.ok) {
+            throw new Error("An error occurred, please try again!");
+          }
+          meetups.updateMeetup(id, meetupData);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } else {
+      fetch("https://meetups-f271a-default-rtdb.firebaseio.com/meetups.json", {
+        method: "POST",
+        body: JSON.stringify({ ...meetupData, isFavorite: false }),
+        headers: { "Content-Type": "application/json" }
       })
-      .then(data =>{
-        meetups.addMeetup({...newMeetUp, isFavorite:false, id:data.name})
-      })
-      .catch(err => {console.log(err)})
-
+        .then(res => {
+          if (!res.ok) {
+            throw new Error("An error occurred, please try again!");
+          }
+          return res.json();
+        })
+        .then(data => {
+          meetups.addMeetup({
+            ...meetupData,
+            isFavorite: false,
+            id: data.name
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
     dispatch("save");
   }

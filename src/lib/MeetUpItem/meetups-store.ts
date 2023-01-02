@@ -22,21 +22,19 @@ const customMeetUpStore = {
   addMeetup: (meetupData:MeetUp)=>{
     const newMeetup = {
       ...meetupData,
-      id: Math.random().toString(),
-      isFavorite: false
     }
     meetups.update(items =>{
       return [newMeetup, ...items]
     })
   },
-  updateMeetup: (id:string, newMeetup:MeetUp) => {
+  updateMeetup: (id:string, meetupData:MeetUp) => {
     meetups.update(items => {
-      const meetupIndex = items.findIndex(i => i.id === id)
-      const updatedMeetup = {...items[meetupIndex], ...newMeetup}
-      const updatedMeetups = [...items]
-      updatedMeetups[meetupIndex]= updatedMeetup
-      return updatedMeetups
-    })
+      const meetupIndex = items.findIndex(i => i.id === id);
+      const updatedMeetup = { ...items[meetupIndex], ...meetupData };
+      const updatedMeetups = [...items];
+      updatedMeetups[meetupIndex] = updatedMeetup;
+      return updatedMeetups;
+    });
   },
   removeMeetup:(id:string)=>{
     meetups.update(items =>{
