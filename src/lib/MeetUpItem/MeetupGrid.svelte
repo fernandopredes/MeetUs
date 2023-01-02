@@ -38,6 +38,9 @@
 
 </section>
 <section id="meetups">
+  {#if filteredMeetups.length === 0}
+     <p id="no-meetups">No meetups found, you can be the first to add =D</p>
+  {/if}
   {#each filteredMeetups as meetup (meetup.id)}
   <div transition:scale animate:flip={{duration:500}}>
     <MeetUpItem
@@ -57,6 +60,9 @@
 </section>
 
 <style>
+  #no-meetups{
+    margin: 1rem;
+  }
   #meetups {
     width: 100%;
     display: grid;

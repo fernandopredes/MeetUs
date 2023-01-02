@@ -12,33 +12,13 @@ type MeetUp = {
 
 };
 
-const meetups = writable([
-  {
-    id: "m1",
-    title: "Coding Camp",
-    subtitle: "Learn to Code",
-    description: "In this meetup, we will have new experts",
-    imageUrl:
-      "https://i.picsum.photos/id/832/1000/300.jpg?hmac=7Um8aw9pY7XACDo2HolPxUMO62augEtR_hfv7a6-HLI",
-    address: "3744 E Chapman Ave",
-    conctactEmail: "test@test.com",
-    isFavorite: false
-  },
-  {
-    id: "m2",
-    title: "Coding Camp",
-    subtitle: "Learn to Code part 2",
-    description: "In this meetup, we will MORE new experts",
-    imageUrl:
-      "https://i.picsum.photos/id/995/1000/300.jpg?hmac=cQdvzwMfKPGJzGRVju60qEce8RLQU5HYU6PeIKk2hkc",
-    address: "3744 E Chapman Ave",
-    conctactEmail: "test@test.com",
-    isFavorite: false
-  },
-])
+const meetups = writable([])
 
 const customMeetUpStore = {
   subscribe: meetups.subscribe,
+  setMeetups:(meetupArray:any)=>{
+    meetups.set(meetupArray)
+  },
   addMeetup: (meetupData:MeetUp)=>{
     const newMeetup = {
       ...meetupData,
