@@ -1,10 +1,25 @@
 <script lang="ts">
+  import { createEventDispatcher } from "svelte";
   import MeetUpItem from "./MeetUpItem.svelte";
   import MeetupFilter from "./MeetupFilter.svelte";
-  export let meetups;
+  import Button from "../UI/Button.svelte";
 
+  type MeetUp = {
+    id?: string;
+    title?: string;
+    subtitle?: string;
+    description?: string;
+    imageUrl?: string;
+    address?: string;
+    conctactEmail?: string;
+    isFavorite?: boolean
+  };
+
+  export let meetups:Array<MeetUp>;
 
   let favsOnly:boolean = false
+
+  const dispatch = createEventDispatcher()
 
   $: filteredMeetups = favsOnly ? meetups.filter(m => m.isFavorite) : meetups
 
@@ -14,7 +29,11 @@
   }
 </script>
 <section id="meetup-controls">
+
   <MeetupFilter on:select={setFilter}/>
+
+  <Button on:click="{() => dispatch('add')}">New Meetup</Button>
+
 </section>
 <section id="meetups">
   {#each filteredMeetups as meetup}
@@ -42,6 +61,8 @@
   }
   #meetup-controls{
     margin: 1rem;
+    display: flex;
+    justify-content: space-between;
   }
 
   @media (min-width: 768px) {
