@@ -18,6 +18,9 @@
     isFavorite?: boolean
   };
 
+  export let id:string = null
+
+
   let title: string = "";
   let subtitle: string = "";
   let description: string = "";
@@ -34,6 +37,20 @@
   let conctactEmailValid: boolean = false;
   let formIsValid: boolean = false;
 
+  if(id){
+
+   const unsubscribe = meetups.subscribe(items => {
+      const selectedMeetup = items.find(i => i.id ===id)
+      title = selectedMeetup.title
+      subtitle = selectedMeetup.title
+      description = selectedMeetup.description
+      imageUrl = selectedMeetup.imageUrl
+      address = selectedMeetup.address
+      conctactEmail = selectedMeetup.conctactEmail
+    })
+
+    unsubscribe()
+  }
   $: titleValid = !isEmpty(title);
   $: subtitleValid = !isEmpty(subtitle);
   $: addressValid = !isEmpty(address);
@@ -66,7 +83,11 @@
     conctactEmail: conctactEmail,
     };
 
-    meetups.addMeetup(newMeetUp)
+    if(id){
+      meetups.updateMeetup(id, newMeetUp)
+    }else{
+      meetups.addMeetup(newMeetUp)
+    }
     dispatch("save");
   }
 
